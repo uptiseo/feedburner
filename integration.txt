@@ -1,0 +1,45 @@
+The link from the Feedburner feed to the article is a Feedburner URL which then redirects to the original URL. 
+The original URL is still contained in the XML for the feed in the element named <feedburner:origLink> and this can be parsed out using PHP’s SimpleXML library, but it’s not quite as simple as referring to ->feedburner:origLink because this will not work.
+The wrong way: 
+If you attempt to do the following with PHP, where $xmlobj is a SimpleXML object with XML loaded from a Feedburner RSS feed:
+echo $xmlobj->item[0]->feedburner:origLink; 
+you will get the following error:
+
+Parse error: syntax error, unexpected ':' in ...
+
+The way to get the information using SimpleXML is a little convoluted and requires the URL for the namespace. The easiest way to get this is to use the getDocNamespaces() method:
+
+$namespaces = $xmlobj->getDocNamespaces();
+Doing print_r($namespaces) shows this for a Feedburner feed:
+
+Array
+(
+    [content] => http://purl.org/rss/1.0/modules/content/
+    [wfw] => http://wellformedweb.org/CommentAPI/
+    [dc] => http://purl.org/dc/elements/1.1/
+    [atom] => http://www.w3.org/2005/Atom
+    [sy] => http://purl.org/rss/1.0/modules/syndication/
+    [feedburner] => http://rssnamespace.org/feedburner/ext/1.0
+)
+
+Pass the URL to the children() method to get the namespace and then the element can be accessed by name. The following example will echo the original link for the first item in the feed:
+
+$feedburner_namespace = $xmlobj->channel->item[0]->children($namespaces['feedburner']);
+echo $feedburner_namespace->origLink;
+
+Putting it all together
+Here’s a full example, which will echo the original links for each item for the feed for blog.healthy.co.nz:
+
+$xml = file_get_contents('http://feeds2.feedburner.com/HealthyBlog-Healthyonline');
+
+$xmlobj = new SimpleXMLElement($xml);
+
+$namespaces = $xmlobj->getDocNamespaces();
+
+foreach($xmlobj->channel->item as $item) {
+    $feedburner_namespace = $item->children($namespaces['feedburner']);
+    echo $feedburner_namespace->origLink, "n";
+}
+This will display (at the time of writing this post):
+
+http://blog.domain.com/title/
