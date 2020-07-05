@@ -1,5 +1,5 @@
 # feedburner
-Modification of the FeedBurner plugin for WordPress enabling alternative feeds for any post type archives and custom taxonomy terms.
+Modification of the FeedBurner plugin for WordPress enabling alternative feeds for any post type archives.
 
 Project developed by GATE Trust - http://gatetrust.org , 
 Supporting team - Institute of Solar Technology - http://istindia.org 
