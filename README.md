@@ -5,7 +5,7 @@ Project developed by GATE Trust - http://gatetrust.org ,
 Supporting team - Institute of Solar Technology - http://istindia.org 
 Academy of EV Technology - http://aevt.org 
 Corporate Partner - VMAXO - https://vmaxo.com & MLAXI - https://mlaxi.com
-
+Research Partner - <a href="https://emrdc.org">Energy Material Research Centre</a>
 Feedburner use for blogger sites:
 <a href="https://gatetrust.blogspot.com/">gatetrust</a> | 
 <a href="https://gpsol.blogspot.com/">gpsol</a> | 
